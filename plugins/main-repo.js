@@ -1,0 +1,96 @@
+const axios = require('axios');
+const { cmd } = require('../inconnuboy');
+const config = require('../config');
+
+const readmore = "\u200e".repeat(4001);
+
+cmd({
+    pattern: "repo",
+    alias: ["git", "sc", "script"],
+    desc: "Fetch the bot repository details",
+    category: "main",
+    react: "👑",
+    filename: __filename
+},
+async (conn, mek, m, { from, reply, sender }) => {
+    try {
+        // ================= LOADING ANIMATION =================
+        await conn.sendMessage(from, { text: `*TEDDY-XMD Loading...* ⏳` }, { quoted: mek });
+        await new Promise(resolve => setTimeout(resolve, 2000)); // 2s delay like menu
+        // =====================================================
+
+        const repoUrl = "https://github.com/Teddyxmd/TEDDY-XMD";
+        const apiUrl = "https://api.github.com/repos/Teddyxmd/TEDDY-XMD";
+
+        const response = await axios.get(apiUrl, {
+            headers: { 'User-Agent': 'TEDDY-XMD' },
+            timeout: 10000
+        });
+        const data = response.data;
+
+        let repoMsg = `┏━━❐✧ *${config.BOT_NAME || 'TEDDY-XMD'}* ✧❐
+┃✦ *User:* @${sender.split('@')[0]}
+┃✦ *Repo:* ${data.name}
+┃✦ *Owner:* ${data.owner.login}
+┃✦ *Language:* ${data.language || 'N/A'}
+┃✦ *Stars:* ${data.stargazers_count}
+┃✦ *Forks:* ${data.forks_count}
+┃✦ *Watchers:* ${data.watchers_count}
+┃✦ *Updated:* ${new Date(data.updated_at).toLocaleDateString()}
+┗❐${readmore}
+
+┏━━❐ *DESCRIPTION* ❐
+┃ ${data.description || 'No description'}
+┗❐
+
+┏━━❐ *LINK* ❐
+┃ ${repoUrl}
+┗❐
+
+_⚡ Powered by ${config.BOT_NAME || 'TEDDY-XMD'}_`;
+
+        const imgUrl = 'https://files.catbox.moe/13nyhx.jpg';
+        let imageBuffer = null;
+        try {
+            imageBuffer = (await axios.get(imgUrl, { responseType: "arraybuffer", timeout: 5000 })).data;
+        } catch {}
+
+        const fakevCard = {
+            key: {
+                fromMe: false,
+                participant: "0@s.whatsapp.net",
+                remoteJid: "status@broadcast"
+            },
+            message: {
+                contactMessage: {
+                    displayName: "𝐓𝐄𝐃𝐘-𝐗𝐌𝐃",
+                    vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:𝐓𝐄𝐃𝐘-𝐗𝐌𝐃\nORG:𝐓𝐄𝐃𝐘-𝐗𝐌𝐃;\nTEL;type=CELL;type=VOICE;waid=254799963583:+254799963583\nEND:VCARD`
+                }
+            }
+        };
+
+        await conn.sendMessage(
+            from,
+            {
+                image: imageBuffer, // IMAGE HEADER LIKE MENU
+                caption: repoMsg,
+                mentions: [sender],
+                contextInfo: {
+                    mentionedJid: [sender],
+                    forwardingScore: 999,
+                    isForwarded: true,
+                    forwardedNewsletterMessageInfo: {
+                        newsletterJid: config.NEWSLETTER_JID || '120363421104812135@newsletter',
+                        newsletterName: config.OWNER_NAME || 'TEDDY-XMD OFFICIAL',
+                        serverMessageId: 1
+                    }
+                }
+            },
+            { quoted: fakevCard }
+        );
+
+    } catch (e) {
+        console.error(e);
+        reply("❌ Failed to fetch repo data. Try again later.");
+    }
+});

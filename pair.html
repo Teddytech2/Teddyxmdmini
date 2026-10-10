@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>TEDDY-XMD • Pair</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box
+}
+
+:root{
+    --bg:#08080b;
+    --border:#232329;
+    --neon:#7CFF67;
+    --neon2:#6D5CFF;
+    --text:#f5f5f7;
+    --muted:#8a8a93;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Space Grotesk',sans-serif;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    overflow-x:hidden;
+}
+
+.aurora{
+    position:fixed;
+    inset:-20%;
+    background:
+        radial-gradient(
+            40% 40% at 20% 20%,
+            rgba(124,255,103,0.15),
+            transparent 60%
+        ),
+        radial-gradient(
+            40% 40% at 80% 20%,
+            rgba(109,92,255,0.18),
+            transparent 60%
+        );
+    filter:blur(40px);
+    z-index:-2;
+}
+
+.grid{
+    position:fixed;
+    inset:0;
+    background-image:
+        linear-gradient(
+            var(--border) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            var(--border) 1px,
+            transparent 1px
+        );
+    background-size:48px 48px;
+    opacity:0.12;
+    mask-image:
+        radial-gradient(
+            ellipse at center,
+            black 40%,
+            transparent 80%
+        );
+    z-index:-1;
+}
+
+/* WRAPPER */
+
+.wrap{
+    width:100%;
+    max-width:440px;
+    padding:16px;
+    display:flex;
+    justify-content:center;
+}
+
+.card{
+    width:100%;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.05),
+            rgba(255,255,255,0.01)
+        );
+    border:1px solid var(--border);
+    border-radius:24px;
+    backdrop-filter:blur(24px);
+    overflow:hidden;
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.6);
+}
+
+/* TOP */
+
+.top{
+    padding:16px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid var(--border);
+}
+
+.logo{
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:14px;
+}
+
+.dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--neon);
+    box-shadow:0 0 12px var(--neon);
+}
+
+.live{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    color:var(--muted);
+}
+
+/* HERO */
+
+.hero{
+    padding:24px 20px 8px;
+}
+
+.hero h1{
+    font-size:28px;
+    line-height:0.95;
+    letter-spacing:-1.2px;
+    font-weight:700;
+}
+
+.hero h1 span{
+    background:
+        linear-gradient(
+            90deg,
+            var(--neon),
+            var(--neon2)
+        );
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    color:var(--muted);
+    font-size:12.5px;
+    margin-top:8px;
+    line-height:1.5;
+}
+
+/* BODY */
+
+.body{
+    padding:18px 18px 20px;
+}
+
+.field label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px;
+    letter-spacing:1.2px;
+    color:var(--muted);
+    text-transform:uppercase;
+    margin-bottom:8px;
+    display:block;
+}
+
+.input-wrap{
+    position:relative;
+}
+
+.input-wrap span{
+    position:absolute;
+    left:14px;
+    top:50%;
+    transform:translateY(-50%);
+    font-family:'JetBrains Mono';
+    font-size:13px;
+    color:var(--muted);
+}
+
+input{
+    width:100%;
+    padding:15px 14px 15px 42px;
+    background:#0c0c0f;
+    border:1px solid var(--border);
+    border-radius:14px;
+    color:var(--text);
+    font-size:16px;
+    outline:none;
+    font-family:'JetBrains Mono',monospace;
+    -webkit-appearance:none;
+}
+
+input:focus{
+    border-color:var(--neon2);
+}
+
+/* MAIN BUTTON */
+
+button.main{
+    width:100%;
+    margin-top:14px;
+    padding:16px;
+    border:none;
+    border-radius:14px;
+    background:
+        linear-gradient(
+            90deg,
+            var(--neon),
+            #b6ffad
+        );
+    color:#000;
+    font-weight:700;
+    font-size:14px;
+    cursor:pointer;
+    touch-action:manipulation;
+}
+
+button.main:active{
+    transform:scale(0.98);
+}
+
+button.main:disabled{
+    opacity:0.7;
+    cursor:not-allowed;
+}
+
+/* STATUS */
+
+.status{
+    font-family:'JetBrains Mono';
+    font-size:11px;
+    text-align:center;
+    min-height:18px;
+    margin-top:12px;
+    color:var(--muted);
+}
+
+/* CODE */
+
+.code{
+    margin-top:16px;
+    display:none;
+    background:#0c0c0f;
+    border:1px dashed rgba(124,255,103,0.4);
+    border-radius:16px;
+    padding:18px;
+    text-align:center;
+    cursor:pointer;
+}
+
+.code .txt{
+    font-family:'Space Grotesk';
+    font-size:26px;
+    font-weight:700;
+    letter-spacing:4px;
+    color:var(--neon);
+    word-break:break-all;
+}
+
+.code .sub{
+    font-family:'JetBrains Mono';
+    font-size:9px;
+    color:var(--muted);
+    margin-top:6px;
+}
+
+/* LINKS */
+
+.links{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:18px;
+}
+
+.links a{
+    text-decoration:none;
+    padding:12px;
+    border-radius:12px;
+    background:#0c0c0f;
+    border:1px solid var(--border);
+    font-size:12px;
+    font-weight:600;
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    touch-action:manipulation;
+    transition:0.25s ease;
+}
+
+.links a:hover{
+    border-color:var(--neon2);
+    transform:translateY(-2px);
+}
+
+/* CONTACT DEVELOPER */
+
+.developer-btn{
+    margin-top:10px;
+    width:100%;
+    padding:13px 14px;
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    text-decoration:none;
+    color:var(--text);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(124,255,103,0.08),
+            rgba(109,92,255,0.10)
+        );
+
+    border:1px solid var(--border);
+    border-radius:14px;
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        background .25s ease;
+
+    touch-action:manipulation;
+}
+
+.developer-btn:hover{
+    transform:translateY(-2px);
+    border-color:var(--neon);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(124,255,103,0.14),
+            rgba(109,92,255,0.16)
+        );
+}
+
+.developer-btn:active{
+    transform:scale(.98);
+}
+
+.dev-icon{
+    width:38px;
+    height:38px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:#0c0c0f;
+    border:1px solid var(--border);
+
+    font-size:20px;
+    flex-shrink:0;
+}
+
+.developer-btn strong{
+    display:block;
+    font-size:12px;
+    line-height:1.3;
+}
+
+.developer-btn small{
+    display:block;
+    margin-top:3px;
+    color:var(--muted);
+    font-size:9px;
+    font-family:'JetBrains Mono',monospace;
+}
+
+.dev-arrow{
+    margin-left:auto;
+    color:var(--neon);
+    font-size:20px;
+    font-weight:700;
+}
+
+/* HOW TO */
+
+.howto{
+    margin-top:16px;
+    background:#0c0c0f;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:14px;
+}
+
+.howto h3{
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    margin-bottom:10px;
+}
+
+.howto ol{
+    list-style:none;
+    counter-reset:step;
+}
+
+.howto li{
+    counter-increment:step;
+    font-size:12px;
+    color:var(--muted);
+    padding:8px 8px 8px 38px;
+    position:relative;
+    border-bottom:1px solid rgba(255,255,255,0.05);
+    line-height:1.4;
+}
+
+.howto li:last-child{
+    border:none;
+}
+
+.howto li::before{
+    content:counter(step);
+    position:absolute;
+    left:6px;
+    top:8px;
+    width:22px;
+    height:22px;
+    background:
+        linear-gradient(
+            90deg,
+            var(--neon2),
+            var(--neon)
+        );
+    color:#000;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'JetBrains Mono';
+    font-weight:700;
+    font-size:11px;
+    text-align:center;
+    line-height:22px;
+}
+
+.howto li b{
+    color:var(--text);
+}
+
+/* FOOTER */
+
+.foot{
+    padding:12px;
+    text-align:center;
+    border-top:1px solid var(--border);
+    font-family:'JetBrains Mono';
+    font-size:8px;
+    color:var(--muted);
+}
+
+/* LOADER */
+
+.loader{
+    width:16px;
+    height:16px;
+    border:2px solid var(--border);
+    border-top-color:var(--neon);
+    border-radius:50%;
+    animation:spin 0.8s linear infinite;
+    display:inline-block;
+    vertical-align:middle;
+    margin-right:8px;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* PC */
+
+@media (min-width:768px){
+
+    body{
+        align-items:center;
+        min-height:100vh;
+        padding:40px;
+    }
+
+    .wrap{
+        max-width:460px;
+        padding:0;
+    }
+
+    .hero h1{
+        font-size:34px;
+    }
+
+    .hero p{
+        font-size:13px;
+    }
+
+    .body{
+        padding:22px;
+    }
+}
+
+/* PHONE */
+
+@media (max-width:480px){
+
+    body{
+        align-items:flex-start;
+        padding-top:10px;
+    }
+
+    .wrap{
+        max-width:100%;
+        padding:12px;
+    }
+
+    .card{
+        border-radius:20px;
+    }
+
+    .hero h1{
+        font-size:26px;
+    }
+
+    input{
+        font-size:16px;
+        padding:16px 14px 16px 42px;
+    }
+
+    button.main{
+        padding:17px;
+        font-size:15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="aurora"></div>
+<div class="grid"></div>
+
+<div class="wrap">
+<div class="card">
+
+<!-- TOP -->
+
+<div class="top">
+    <div class="logo">
+        <div class="dot"></div>
+        TEDDY-XMD
+    </div>
+
+    <div class="live">
+        ● Live • <span id="time">00:00</span>
+    </div>
+</div>
+
+<!-- HERO -->
+
+<div class="hero">
+    <h1>
+        Pair your<br>
+        <span>WhatsApp.</span>
+    </h1>
+
+    <p>
+        Enter number with country code.
+        Get instant pairing code.
+    </p>
+</div>
+
+<!-- BODY -->
+
+<div class="body">
+
+<div class="field">
+
+    <label>WhatsApp Number</label>
+
+    <div class="input-wrap">
+
+        <span>+</span>
+
+        <input
+            id="number"
+            type="tel"
+            placeholder="254712345678"
+            inputmode="numeric"
+            autocomplete="off"
+        >
+
+    </div>
+
+</div>
+
+<button
+    class="main"
+    id="pairBtn"
+    onclick="getCode()"
+>
+    🔗 Generate Pairing Code
+</button>
+
+<div
+    class="status"
+    id="result"
+>
+    Ready to pair • Works on PC & Phone
+</div>
+
+<!-- PAIRING CODE -->
+
+<div
+    class="code"
+    id="code-box"
+    onclick="copyCode()"
+>
+    <div
+        class="txt"
+        id="code-txt"
+    >
+        --------
+    </div>
+
+    <div class="sub">
+        📋 TAP TO COPY • EXPIRES IN 2 MIN
+    </div>
+</div>
+
+<!-- ANDROID -->
+
+<div class="howto">
+
+<h3>
+    📱 Android - How To Link
+</h3>
+
+<ol>
+
+<li>
+    Open <b>WhatsApp</b>
+</li>
+
+<li>
+    Tap <b>⋮</b> → <b>Settings</b>
+</li>
+
+<li>
+    Tap <b>Linked devices</b>
+</li>
+
+<li>
+    Tap <b>Link a device</b>
+</li>
+
+<li>
+    Tap <b>Link with phone number instead</b>
+</li>
+
+<li>
+    Enter <b>8-digit code</b> from this site
+</li>
+
+</ol>
+
+</div>
+
+<!-- IPHONE -->
+
+<div
+    class="howto"
+    style="margin-top:10px"
+>
+
+<h3>
+    🍎 iPhone - How To Link
+</h3>
+
+<ol>
+
+<li>
+    Open <b>WhatsApp</b> → <b>Settings</b>
+</li>
+
+<li>
+    Tap <b>Linked Devices</b>
+</li>
+
+<li>
+    Tap <b>Link a Device</b>
+</li>
+
+<li>
+    Tap <b>Link with phone number instead</b>
+</li>
+
+<li>
+    Enter <b>8-digit code</b>
+</li>
+
+</ol>
+
+</div>
+
+<!-- GROUP + CHANNEL -->
+
+<div class="links">
+
+<a
+    href="https://chat.whatsapp.com/CLClgqJIC59GrcI4sRzLu8"
+    target="_blank"
+    rel="noopener noreferrer"
+>
+    ◍ Group
+</a>
+
+<a
+    href="https://whatsapp.com/channel/0029Vb6NveDBPzjPa4vIRt3n"
+    target="_blank"
+    rel="noopener noreferrer"
+>
+    ◎ Channel
+</a>
+
+</div>
+
+<!-- CONTACT DEVELOPER -->
+
+<a
+    class="developer-btn"
+    href="https://wa.me/+254799963583?text=Hello%20TEDDY-XMD%20Developer%2C%20I%20need%20help%20with%20pairing."
+    target="_blank"
+    rel="noopener noreferrer"
+>
+
+    <span class="dev-icon">
+        👨‍💻
+    </span>
+
+    <span>
+        <strong>Contact Developer</strong>
+
+        <small>
+            Need help? Chat with the developer
+        </small>
+    </span>
+
+    <span class="dev-arrow">
+        →
+    </span>
+
+</a>
+
+</div>
+
+<!-- FOOTER -->
+
+<div class="foot">
+    TEDDY-XMD v2.6 • Responsive • No Popups
+</div>
+
+</div>
+</div>
+
+<script>
+
+/* LIVE CLOCK */
+
+function updateTime(){
+
+    document.getElementById(
+        'time'
+    ).textContent =
+        new Date().toLocaleTimeString(
+            'en-GB',
+            {
+                hour12:false
+            }
+        );
+}
+
+setInterval(
+    updateTime,
+    1000
+);
+
+updateTime();
+
+
+/* PAIRING CODE */
+
+let currentCode = '';
+
+
+async function getCode(){
+
+    const input =
+        document.getElementById(
+            'number'
+        );
+
+    const btn =
+        document.getElementById(
+            'pairBtn'
+        );
+
+    const resEl =
+        document.getElementById(
+            'result'
+        );
+
+    const box =
+        document.getElementById(
+            'code-box'
+        );
+
+    const codeTxt =
+        document.getElementById(
+            'code-txt'
+        );
+
+
+    let number =
+        input.value
+            .trim()
+            .replace(
+                /[^0-9]/g,
+                ''
+            );
+
+
+    /* VALIDATION */
+
+    if(
+        !number ||
+        number.length < 10
+    ){
+
+        resEl.textContent =
+            '❌ Invalid WhatsApp number';
+
+        resEl.style.color =
+            '#ff6b6b';
+
+        return;
+    }
+
+
+    /* LOADING */
+
+    btn.disabled = true;
+
+    btn.innerHTML =
+        '<span class="loader"></span> Generating...';
+
+    resEl.textContent =
+        '🔄 Connecting to WhatsApp...';
+
+    resEl.style.color =
+        '';
+
+    box.style.display =
+        'none';
+
+
+    try{
+
+        const res =
+            await fetch(
+                `/code?number=${encodeURIComponent(number)}`
+            );
+
+
+        const data =
+            await res.json();
+
+
+        /* SUCCESS */
+
+        if(data.code){
+
+            currentCode =
+                data.code;
+
+            codeTxt.textContent =
+                data.code;
+
+            box.style.display =
+                'block';
+
+            resEl.textContent =
+                '✅ Success — tap code to copy';
+
+            resEl.style.color =
+                '#7CFF67';
+
+        }
+
+        /* SERVER ERROR */
+
+        else{
+
+            resEl.textContent =
+                '❌ ' +
+                (
+                    data.error ||
+                    'Failed to generate pairing code'
+                );
+
+            resEl.style.color =
+                '#ff6b6b';
+        }
+
+    }
+
+    catch(error){
+
+        console.error(
+            'PAIR ERROR:',
+            error
+        );
+
+        resEl.textContent =
+            '❌ Server unreachable';
+
+        resEl.style.color =
+            '#ff6b6b';
+    }
+
+    finally{
+
+        btn.disabled =
+            false;
+
+        btn.innerHTML =
+            '🔗 Generate Pairing Code';
+    }
+}
+
+
+/* COPY CODE */
+
+function copyCode(){
+
+    if(!currentCode)
+        return;
+
+
+    navigator.clipboard
+        .writeText(currentCode)
+
+        .then(()=>{
+
+            const result =
+                document.getElementById(
+                    'result'
+                );
+
+            result.textContent =
+                '📋 Pairing code copied!';
+
+            result.style.color =
+                '#7CFF67';
+
+
+            setTimeout(()=>{
+
+                result.textContent =
+                    'Ready to pair';
+
+                result.style.color =
+                    '';
+
+            },2000);
+
+        })
+
+        .catch(()=>{
+
+            const result =
+                document.getElementById(
+                    'result'
+                );
+
+            result.textContent =
+                '❌ Could not copy code';
+
+            result.style.color =
+                '#ff6b6b';
+
+        });
+}
+
+
+/* ENTER KEY */
+
+document
+    .getElementById('number')
+    .addEventListener(
+        'keypress',
+        e => {
+
+            if(
+                e.key === 'Enter'
+            ){
+
+                getCode();
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
